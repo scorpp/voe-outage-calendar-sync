@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "voe-outage-calendar"
+version = "0.1.0"
+description = "Vinnytsia Oblenergo hourly outages sync to Google Calendar"
+authors = ["Kirill Malyshev <keryascorpio@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "*"
+beautifulsoup4 = "*"
+icalendar = "*"
+ical-to-gcal-sync = {git = "https://github.com/scorpp/ical_to_gcal_sync.git", rev = "main"}
+
+[tool.poetry.group.dev.dependencies]
+black = {extras = ["d"], version = "*"}
+
+[tool.poetry.scripts]
+sync = "voe_outage_calendar:main"
+
+[tool.black]
+line-length = 118
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
