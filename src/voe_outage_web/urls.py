@@ -19,7 +19,10 @@ from django.contrib import admin
 from django.urls import path
 from django.views import View
 
+from voe_outage_sync.views import RunSyncView
+
 urlpatterns = [
     path("", View.as_view(), name="home"),
+    path("/sync/run", RunSyncView.as_view(), name="run-sync"),
     # path("admin/", admin.site.urls),
 ]
