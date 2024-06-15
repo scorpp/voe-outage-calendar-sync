@@ -36,7 +36,7 @@ class VoeOutageSyncConfig(AppConfig):
             logger.debug("Initializing scheduler")
 
             scheduler = Scheduler()
-            scheduler.minutely([dt.time(minute=0, second=0), dt.time(minute=0, second=30)], self.sync_outages)
+            scheduler.hourly(dt.time(minute=0, second=0), self.sync_outages)
 
             thread = threading.Thread(target=scheduler_thread_func, args=(scheduler,), daemon=True)
             thread.start()
