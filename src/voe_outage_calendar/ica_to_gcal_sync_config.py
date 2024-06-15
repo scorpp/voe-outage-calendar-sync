@@ -11,6 +11,7 @@
 # 'files': If it is True then 'source' is the path to a folder full of ics files.
 #
 #  Feeds can be of mixed types
+from voe_outage_web import settings
 
 ICAL_FEEDS = [
     {
@@ -35,10 +36,10 @@ ICAL_FEED_VERIFY_SSL_CERT = True
 SCOPES = "https://www.googleapis.com/auth/calendar"
 
 # API secret stored in this file
-CLIENT_SECRET_FILE = "ical_to_gcal_sync_client_secret.json"
+CLIENT_SECRET_FILE = str(settings.BASE_DIR / ".." / "ical_to_gcal_sync_client_secret.json")
 
 # Location to store API credentials
-CREDENTIAL_PATH = "ical_to_gcal_sync_credentials.json"
+CREDENTIAL_PATH = str(settings.BASE_DIR / ".." / "ical_to_gcal_sync_credentials.json")
 
 # Application name for the Google Calendar API
 APPLICATION_NAME = "ical_to_gcal_sync"

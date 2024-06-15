@@ -11,7 +11,7 @@ from voe_outage_calendar.voe import get_disconnections
 logger = logging.getLogger(__name__)
 
 
-def run(city: str, street: str, building: str):
+def voe_sync_outages(city: str, street: str, building: str):
     logger.info("Fetching outages")
     disconnections = get_disconnections(city, street, building)
     list(map(logger.info, disconnections))
@@ -26,9 +26,9 @@ def run(city: str, street: str, building: str):
 
 def main():
     parser = ArgumentParser("voe-crawler", description="Export Vinnytsia Oblenergo outages to Google Calendar")
-    parser.add_argument("-c", "--city", "City (Vinnytska oblast only)")
-    parser.add_argument("-s", "--street", "Street")
-    parser.add_argument("-b", "--building", "Building number")
+    parser.add_argument("-c", "--city", help="City (Vinnytska oblast only)", required=True)
+    parser.add_argument("-s", "--street", help="Street", required=True)
+    parser.add_argument("-b", "--building", help="Building number", required=True)
     args = parser.parse_args()
 
     handler = logging.StreamHandler(sys.stdout)
@@ -37,4 +37,4 @@ def main():
     logging.getLogger("ical_to_gcal_sync").setLevel(logging.DEBUG)
     logging.getLogger("voe_outage_calendar").setLevel(logging.DEBUG)
 
-    run(args.city, args.street, args.building)
+    voe_sync_outages(args.city, args.street, args.building)

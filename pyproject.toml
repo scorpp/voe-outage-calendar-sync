@@ -11,6 +11,9 @@ requests = "*"
 beautifulsoup4 = "*"
 icalendar = "*"
 ical-to-gcal-sync = {git = "https://github.com/scorpp/ical_to_gcal_sync.git", rev = "main"}
+scheduler = "*"
+django = "*"
+gunicorn = "*"
 
 [tool.poetry.group.dev.dependencies]
 black = {extras = ["d"], version = "*"}
