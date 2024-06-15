@@ -36,10 +36,10 @@ ICAL_FEED_VERIFY_SSL_CERT = True
 SCOPES = "https://www.googleapis.com/auth/calendar"
 
 # API secret stored in this file
-CLIENT_SECRET_FILE = str(settings.BASE_DIR / ".." / "ical_to_gcal_sync_client_secret.json")
+CLIENT_SECRET_FILE = "/tmp/ical_to_gcal_sync_client_secret.json"
 
 # Location to store API credentials
-CREDENTIAL_PATH = str(settings.BASE_DIR / ".." / "ical_to_gcal_sync_credentials.json")
+CREDENTIAL_PATH = "/tmp/ical_to_gcal_sync_credentials.json"
 
 # Application name for the Google Calendar API
 APPLICATION_NAME = "ical_to_gcal_sync"

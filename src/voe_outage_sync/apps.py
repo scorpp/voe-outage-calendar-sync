@@ -5,6 +5,7 @@ import threading
 import time
 
 from django.apps import AppConfig
+from django.conf import settings
 from scheduler import Scheduler
 
 from voe_outage_calendar import voe_sync_outages
@@ -23,6 +24,13 @@ class VoeOutageSyncConfig(AppConfig):
     name = "voe_outage_sync"
 
     def ready(self):
+        from voe_outage_calendar.ica_to_gcal_sync_config import CLIENT_SECRET_FILE, CREDENTIAL_PATH
+
+        with open(CLIENT_SECRET_FILE, "w") as f:
+            f.write(settings.GOOGLE_CLIENT_SECRET_JSON)
+        with open(CREDENTIAL_PATH, "w") as f:
+            f.write(settings.GOOGLE_CREDENTIALS_JSON)
+
         # trick to avoid double initialisation in Django runserver with auto-reload
         if os.environ.get("RUN_MAIN", None) != "true":
             logger.debug("Initializing scheduler")
