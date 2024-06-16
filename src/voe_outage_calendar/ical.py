@@ -2,15 +2,15 @@ from typing import IO, Iterable
 
 from icalendar import Calendar, Event, vDatetime
 
-from voe_outage_calendar.models import Disconnection
+from voe_outage_calendar.models import Outage
 
 
-def write_disconnections_ical(file_like: IO, disconnections: Iterable[Disconnection]) -> None:
+def write_disconnections_ical(file_like: IO, disconnections: Iterable[Outage]) -> None:
     calendar = disconnections_to_ical(disconnections)
     file_like.write(calendar.to_ical())
 
 
-def disconnections_to_ical(disconnections: Iterable[Disconnection]) -> Calendar:
+def disconnections_to_ical(disconnections: Iterable[Outage]) -> Calendar:
     calendar = Calendar()
     calendar["uid"] = "c89eb9f3-262b-4306-b947-610f1ae6cbb7"
     calendar["prodid"] = "-//VOE Calendar Sync//scorpp//"

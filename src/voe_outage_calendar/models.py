@@ -4,7 +4,25 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class DisconnectionEnum(str, Enum):
+@dataclass
+class IdName:
+    id: int
+    name: str
+
+
+class City(IdName):
+    pass
+
+
+class Street(IdName):
+    pass
+
+
+class Building(IdName):
+    pass
+
+
+class OutageType(str, Enum):
     CONFIRMED = "Confirmed"
     UNCONFIRMED = "Unconfirmed"
 
@@ -13,10 +31,10 @@ class DisconnectionEnum(str, Enum):
 
 
 @dataclass
-class Disconnection:
+class Outage:
     start: datetime.datetime
     end: datetime.datetime
-    status: DisconnectionEnum
+    status: OutageType
 
     def id(self):
         digest = hashlib.md5()

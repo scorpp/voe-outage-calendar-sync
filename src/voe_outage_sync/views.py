@@ -4,6 +4,13 @@ from django.http import HttpRequest, HttpResponse
 from django.views import View
 
 
+class IndexView(View):
+    def get(self, request):
+        return HttpResponse(
+            status=200, content_type="text/plain", content=b"Hello, world. You're at the polls index."
+        )
+
+
 class RunSyncView(View):
     def post(self, request: HttpRequest):
         if str(request.body) == settings.INTERNAL_SECRET:
