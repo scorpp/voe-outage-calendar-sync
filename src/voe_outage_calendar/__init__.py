@@ -3,6 +3,7 @@ import sys
 from argparse import ArgumentParser
 
 import ical_to_gcal_sync
+from anyio.streams.file import FileWriteStream
 
 import voe_outage_calendar.ica_to_gcal_sync_config
 from voe_outage_calendar.ical import write_disconnections_ical
@@ -11,14 +12,14 @@ from voe_outage_calendar.voe import get_disconnections
 logger = logging.getLogger(__name__)
 
 
-def voe_sync_outages(city: str, street: str, building: str):
+async def voe_sync_outages(city: str, street: str, building: str):
     logger.info("Fetching outages")
-    disconnections = get_disconnections(city, street, building)
+    disconnections = await get_disconnections(city, street, building)
     list(map(logger.info, disconnections))
 
     logger.info("Exporting outages calendar")
-    with open("calendar.ics", "wb") as f:
-        write_disconnections_ical(f, disconnections)
+    async with await FileWriteStream.from_path("calendar.ics") as stream:
+        await write_disconnections_ical(stream, disconnections)
 
     logger.info("Syncing to Google Calendar")
     ical_to_gcal_sync.run_sync(vars(ica_to_gcal_sync_config))

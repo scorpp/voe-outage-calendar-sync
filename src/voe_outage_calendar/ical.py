@@ -1,13 +1,14 @@
 from typing import IO, Iterable
 
+from anyio.abc import ByteSendStream
 from icalendar import Calendar, Event, vDatetime
 
 from voe_outage_calendar.models import Outage
 
 
-def write_disconnections_ical(file_like: IO, disconnections: Iterable[Outage]) -> None:
+async def write_disconnections_ical(file_like: ByteSendStream, disconnections: Iterable[Outage]) -> None:
     calendar = disconnections_to_ical(disconnections)
-    file_like.write(calendar.to_ical())
+    await file_like.send(calendar.to_ical())
 
 
 def disconnections_to_ical(disconnections: Iterable[Outage]) -> Calendar:
