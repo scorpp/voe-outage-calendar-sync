@@ -1,6 +1,6 @@
 import datetime
 import logging
-from typing import Type, TypeVar
+from typing import Generic, Type, TypeVar
 from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 T = TypeVar("T", bound=IdName)
 
 
-class VoeAutocompleteParser[T]:
+class VoeAutocompleteParser(Generic[T]):
     model_class: Type[T]
 
     def __init__(self, model_class: Type[T]) -> None:
