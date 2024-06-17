@@ -9,10 +9,9 @@ class IndexView(View):
         return HttpResponse(status=200, content_type="text/plain", content=b"VOE outages sync")
 
 
-class RunSyncView(View):
-    def post(self, request: HttpRequest):
-        if request.body.decode() == settings.INTERNAL_SECRET:
-            apps.get_app_config("voe_outage_sync").sync_outages()
-            return HttpResponse(status=200, content_type="text/plain", content=b"OK")
+async def run_sync(request: HttpRequest):
+    if request.body.decode() == settings.INTERNAL_SECRET:
+        await apps.get_app_config("voe_outage_sync").sync_outages()
+        return HttpResponse(status=200, content_type="text/plain", content=b"OK")
 
-        return HttpResponse(status=403, content_type="text/plain", content=b"Forbidden")
+    return HttpResponse(status=403, content_type="text/plain", content=b"Forbidden")

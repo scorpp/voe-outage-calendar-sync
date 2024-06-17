@@ -27,7 +27,7 @@ class VoeOutageSyncConfig(AppConfig):
 
         # trick to avoid double initialisation in Django runserver with auto-reload
         if os.environ.get("RUN_MAIN", None) != "true":
-            asyncio.get_event_loop().create_task(self.run_scheduler())
+            asyncio.create_task(self.run_scheduler())
 
     async def run_scheduler(self):
         cron_expr = settings.SYNC_RUN_CRONTAB
