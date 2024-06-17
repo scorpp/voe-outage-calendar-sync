@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 LANGUAGE_CODE = "en-us"
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Kyiv"
 USE_I18N = True
 USE_TZ = True
 
@@ -124,3 +124,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 GOOGLE_CLIENT_SECRET_JSON = os.getenv("GOOGLE_CLIENT_SECRET_JSON")
 GOOGLE_CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS_JSON")
 INTERNAL_SECRET = os.getenv("INTERNAL_SECRET")
+SYNC_RUN_CRONTAB = os.getenv("SYNC_RUN_CRONTAB", "*/30 * * * * *")

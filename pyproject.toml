@@ -7,12 +7,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+apscheduler = "^3.10.4"
 beautifulsoup4 = "*"
 django = "*"
 icalendar = "*"
 ical-to-gcal-sync = {git = "https://github.com/scorpp/ical_to_gcal_sync.git", rev = "main"}
 httpx = "*"
-scheduler = "*"
 uvicorn = "*"
 
 [tool.poetry.group.dev.dependencies]
