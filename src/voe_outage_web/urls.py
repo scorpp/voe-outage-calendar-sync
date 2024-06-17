@@ -15,14 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.contrib import admin
 from django.urls import path
-from django.views import View
 
-from voe_outage_sync.views import RunSyncView
+from voe_outage_sync.views import IndexView, RunSyncView
 
 urlpatterns = [
-    path("", View.as_view(), name="home"),
-    path("/sync/run", RunSyncView.as_view(), name="run-sync"),
-    # path("admin/", admin.site.urls),
+    path("", IndexView.as_view(), name="home"),
+    path("sync/run", RunSyncView.as_view(), name="run-sync"),
 ]
