@@ -29,7 +29,7 @@ class VoeOutageSyncConfig(AppConfig):
             logger.debug("Initializing scheduler")
 
             scheduler = Scheduler()
-            scheduler.minutely([dt.time(minute=0, second=0), dt.time(minute=0, second=30)], self.sync_outages)
+            scheduler.hourly(dt.time(minute=0, second=0), self.sync_outages)
 
     async def sync_outages(self):
         await voe_sync_outages(os.getenv("CITY"), os.getenv("STREET"), os.getenv("BUILDING"))
