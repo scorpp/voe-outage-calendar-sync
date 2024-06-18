@@ -17,9 +17,9 @@ Including another URLconf
 
 from django.urls import path
 
-from voe_outage_sync.views import IndexView, run_sync
+from voe_outage_sync.views import IndexView, RunSyncView
 
 urlpatterns = [
     path("", IndexView.as_view(), name="home"),
-    path("sync/run", run_sync, name="run-sync"),
+    path("sync/run", RunSyncView.as_view(), name="run-sync"),
 ]

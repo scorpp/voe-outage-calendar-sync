@@ -5,13 +5,14 @@ from django.views import View
 
 
 class IndexView(View):
-    def get(self, request):
+    async def get(self, request):
         return HttpResponse(status=200, content_type="text/plain", content=b"VOE outages sync")
 
 
-async def run_sync(request: HttpRequest):
-    if request.body.decode() == settings.INTERNAL_SECRET:
-        await apps.get_app_config("voe_outage_sync").sync_outages()
-        return HttpResponse(status=200, content_type="text/plain", content=b"OK")
+class RunSyncView(View):
+    async def post(self, request: HttpRequest):
+        if request.body.decode() == settings.INTERNAL_SECRET:
+            await apps.get_app_config("voe_outage_sync").sync_outages()
+            return HttpResponse(status=200, content_type="text/plain", content=b"OK")
 
-    return HttpResponse(status=403, content_type="text/plain", content=b"Forbidden")
+        return HttpResponse(status=403, content_type="text/plain", content=b"Forbidden")
