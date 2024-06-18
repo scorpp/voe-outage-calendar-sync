@@ -73,5 +73,10 @@ LOGGING = {
             "level": "DEBUG",
             "propagate": False,
         },
+        "uvicorn": {
+            "handlers": ["console", "mail_admins"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
