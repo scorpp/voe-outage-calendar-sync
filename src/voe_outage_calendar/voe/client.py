@@ -28,7 +28,7 @@ class VoeClient:
 
     async def _get_autocomplete(self, url: str, q: str, model_class: Type[T]) -> list[T]:
         """Send request to autocomplete endpoint and parse the response."""
-        resp = await self.session.get(url, params={"q": q})
+        resp = await self.session.get(url, params={"q": q}, timeout=30)
         resp.raise_for_status()
 
         parser = VoeAutocompleteParser(model_class)
@@ -43,6 +43,7 @@ class VoeClient:
                 "house_id": building.id,
                 "form_id": "disconnection_detailed_search_form",
             },
+            timeout=30,
         )
         resp.raise_for_status()
 
