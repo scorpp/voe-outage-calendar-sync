@@ -1,18 +1,20 @@
+import asyncio
 import logging
 import sys
 from argparse import ArgumentParser
 
+import django
 import ical_to_gcal_sync
 from anyio.streams.file import FileWriteStream
-
-import voe_outage_calendar.ica_to_gcal_sync_config
-from voe_outage_calendar.ical import write_disconnections_ical
-from voe_outage_calendar.voe import get_disconnections
 
 logger = logging.getLogger(__name__)
 
 
 async def voe_sync_outages(city: str, street: str, building: str):
+    import voe_outage_calendar.ica_to_gcal_sync_config
+    from voe_outage_calendar.ical import write_disconnections_ical
+    from voe_outage_calendar.voe import get_disconnections
+
     logger.info("Fetching outages")
     disconnections = await get_disconnections(city, street, building)
     list(map(logger.info, disconnections))
@@ -38,4 +40,8 @@ def main():
     logging.getLogger("ical_to_gcal_sync").setLevel(logging.DEBUG)
     logging.getLogger("voe_outage_calendar").setLevel(logging.DEBUG)
 
-    voe_sync_outages(args.city, args.street, args.building)
+    django.setup()  # otherwise django translations don't work
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(voe_sync_outages(args.city, args.street, args.building))
+    loop.close()

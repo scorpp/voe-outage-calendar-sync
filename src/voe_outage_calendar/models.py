@@ -1,7 +1,8 @@
 import datetime
 import hashlib
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, StrEnum
+from django.utils.translation import gettext_lazy as _
 
 
 @dataclass
@@ -22,12 +23,18 @@ class Building(IdName):
     pass
 
 
-class OutageType(str, Enum):
-    CONFIRMED = "Confirmed"
-    UNCONFIRMED = "Unconfirmed"
+class OutageType(StrEnum):
+    CONFIRMED = "confirmed", _("Confirmed")
+    UNCONFIRMED = "unconfirmed", _("Unconfirmed")
+
+    def __new__(cls, value, label):
+        instance = str.__new__(cls, value)
+        instance._value_ = value
+        instance._label = label
+        return instance
 
     def __str__(self):
-        return self.value
+        return str(self._label)
 
 
 @dataclass
@@ -40,7 +47,7 @@ class Outage:
         digest = hashlib.md5()
         digest.update(self.start.isoformat().encode("utf-8"))
         digest.update(self.end.isoformat().encode("utf-8"))
-        digest.update(str(self.status).encode("utf-8"))
+        digest.update(self.status.value.encode("utf-8"))
         return digest.hexdigest()
 
     def __str__(self):

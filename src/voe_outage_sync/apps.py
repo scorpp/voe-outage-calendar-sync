@@ -7,8 +7,6 @@ from apscheduler.triggers.cron import CronTrigger
 from django.apps import AppConfig
 from django.conf import settings
 
-from voe_outage_calendar import voe_sync_outages
-
 logger = logging.getLogger(__name__)
 
 
@@ -27,7 +25,13 @@ class VoeOutageSyncConfig(AppConfig):
 
         # trick to avoid double initialisation in Django runserver with auto-reload
         if os.environ.get("RUN_MAIN", None) != "true":
-            asyncio.create_task(self.run_scheduler())
+            try:
+                # this is a counter-intuitive way to tell b/w app server running and a management command / main
+                _ = asyncio.get_running_loop()
+            except RuntimeError:
+                pass
+            else:
+                asyncio.create_task(self.run_scheduler())
 
     async def run_scheduler(self):
         cron_expr = settings.SYNC_RUN_CRONTAB
