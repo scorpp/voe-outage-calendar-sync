@@ -7,6 +7,8 @@ from apscheduler.triggers.cron import CronTrigger
 from django.apps import AppConfig
 from django.conf import settings
 
+from voe_outage_calendar import voe_sync_outages
+
 logger = logging.getLogger(__name__)
 
 
