@@ -5,7 +5,7 @@ from enum import Enum, StrEnum
 from django.utils.translation import gettext_lazy as _
 
 
-@dataclass
+@dataclass(eq=True, frozen=True)  # request __hash__ method generation
 class IdName:
     id: int
     name: str
