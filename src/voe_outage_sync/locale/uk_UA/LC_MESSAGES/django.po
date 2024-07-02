@@ -19,8 +19,8 @@ msgstr ""
 
 #: voe_outage_calendar/models.py:27
 msgid "Confirmed"
-msgstr "Відключення світла"
+msgstr "Відключення"
 
 #: voe_outage_calendar/models.py:28
 msgid "Unconfirmed"
-msgstr "Можливе відключення світла"
+msgstr "Можливе відключення"
