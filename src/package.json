@@ -1,0 +1,19 @@
+{
+  "name": "voe-outage-web",
+  "version": "0.1.0",
+  "description": "Vinnytsia Oblenergo hourly outages sync to Google Calendar",
+  "scripts": {
+    "build": "tailwind  -c tailwind.config.js -i voe_outage_sync/static/input.css -o voe_outage_sync/static/output.css",
+    "watch": "npm run build -- --watch"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scorpp/voe-outage-calendar-sync/issues"
+  },
+  "homepage": "https://github.com/scorpp/voe-outage-calendar-sync",
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  },
+  "dependencies": {
+  }
+}

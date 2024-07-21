@@ -1,5 +1,7 @@
 calendar.ics
 ical_to_gcal_sync_*.json
+src/node_modules/
+src/staticfiles/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

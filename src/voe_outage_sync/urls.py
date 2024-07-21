@@ -15,12 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf import settings
-from django.conf.urls.static import static
-from django.urls import include, path
+from django.urls import path
 
-from voe_outage_sync.views import ICalView, IndexView, RunSyncView, SiteWebManifestView
+from .views import ICalView, IndexView, RunSyncView, SiteWebManifestView
 
 urlpatterns = [
-    path("", include("voe_outage_sync.urls")),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path("", IndexView.as_view(), name="home"),
+    path("site.webmanifest", SiteWebManifestView.as_view(), name="site-webmanifest"),
+    path("sync/run", RunSyncView.as_view(), name="run-sync"),
+    path("ical/<str:city>/<str:street>/<str:building>.ics", ICalView.as_view(), name="ical-view"),
+]

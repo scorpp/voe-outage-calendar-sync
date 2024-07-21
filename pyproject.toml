@@ -9,10 +9,12 @@ readme = "README.md"
 python = "^3.11"
 apscheduler = "^3.10.4"
 beautifulsoup4 = "*"
+blacknoise = "^1.0.2"
 django = "*"
 icalendar = "*"
 ical-to-gcal-sync = {git = "https://github.com/scorpp/ical_to_gcal_sync.git", rev = "main"}
 httpx = "*"
+jinja2 = "^3.1.4"
 uvicorn = "*"
 
 [tool.poetry.group.dev.dependencies]

@@ -1,12 +1,13 @@
 import asyncio
 import logging
+import os
 import sys
 from argparse import ArgumentParser
-from icalendar import Calendar
 
 import django
 import ical_to_gcal_sync
 from anyio.streams.file import FileWriteStream
+from icalendar import Calendar
 
 from voe_outage_calendar.models import Outage
 
@@ -64,6 +65,7 @@ def main():
     logging.getLogger("ical_to_gcal_sync").setLevel(logging.DEBUG)
     logging.getLogger("voe_outage_calendar").setLevel(logging.DEBUG)
 
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "voe_outage_web.settings")
     django.setup()  # otherwise django translations don't work
 
     loop = asyncio.get_event_loop()

@@ -3,17 +3,34 @@ from http import HTTPStatus
 
 from django.apps import apps
 from django.conf import settings
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseBase, StreamingHttpResponse
+from django.template.loader import get_template
 from django.views import View
+from django.views.generic.base import ContextMixin
 
 from voe_outage_calendar import export_to_ical, fetch_outages
 
 logger = logging.getLogger(__name__)
 
 
-class IndexView(View):
-    async def get(self, request):
-        return HttpResponse(status=200, content_type="text/plain", content=b"VOE outages sync")
+class JinjaAsyncTemplateView(ContextMixin, View):
+    template_name: str
+
+    async def get(self, request: HttpRequest, **kwargs) -> HttpResponseBase:
+        context = self.get_context_data()
+        return await self.render_to_response(context)
+
+    async def render_to_response(self, context, **response_kwargs):
+        template = get_template(self.template_name)
+        return StreamingHttpResponse(template.template.generate_async(context=context), **response_kwargs)
+
+
+class IndexView(JinjaAsyncTemplateView):
+    template_name = "index.html"
+
+
+class SiteWebManifestView(JinjaAsyncTemplateView):
+    template_name = "site.webmanifest"
 
 
 class RunSyncView(View):

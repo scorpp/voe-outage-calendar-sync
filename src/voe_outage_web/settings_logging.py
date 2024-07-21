@@ -78,5 +78,7 @@ LOGGING = {
             "level": "INFO",
             "propagate": False,
         },
+        # "httpx": {"level": "DEBUG"},
+        # "httpcore": {"level": "DEBUG"},
     },
 }
