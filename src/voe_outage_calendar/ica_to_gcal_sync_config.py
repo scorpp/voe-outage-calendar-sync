@@ -16,7 +16,7 @@ from voe_outage_web import settings
 ICAL_FEEDS = [
     {
         "source": "./",
-        "destination": "f864113a649023c26d0982891bdc81518b939b32116ed2912e6cc8e0221cc617@group.calendar.google.com",
+        "destination": "407a6503537268e7e51b3b4f369095bdecb00da6fd74fab97c20f4525bacbbc1@group.calendar.google.com",
         "files": True,
     },
 ]
@@ -33,7 +33,9 @@ ICAL_FEED_PASS = None
 ICAL_FEED_VERIFY_SSL_CERT = True
 
 # Must use the OAuth scope that allows write access
-SCOPES = "https://www.googleapis.com/auth/calendar"
+# TODO need to make it a list https://github.com/scorpp/voe-outage-calendar-sync/issues/1
+# SCOPES = "https://www.googleapis.com/auth/calendar.calendarlist.readonly https://www.googleapis.com/auth/calendar.app.created"
+SCOPES = "https://www.googleapis.com/auth/calendar.app.created"
 
 # API secret stored in this file
 CLIENT_SECRET_FILE = "/tmp/ical_to_gcal_sync_client_secret.json"

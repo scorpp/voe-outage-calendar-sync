@@ -1,20 +1,15 @@
-import asyncio
 import logging
-import sys
-from argparse import ArgumentParser
-from icalendar import Calendar
 
-import django
 import ical_to_gcal_sync
 from anyio.streams.file import FileWriteStream
+from icalendar import Calendar
 
-from voe_outage_calendar.models import Outage
+from voe_outage_calendar.models import City, Outage, OutageType
 
 logger = logging.getLogger(__name__)
 
 
 async def voe_sync_outages(city: str, street: str, building: str):
-
     disconnections = await fetch_outages(city, street, building)
 
     await export_to_ical_file(disconnections)
@@ -49,23 +44,3 @@ def export_to_ical(outages: list[Outage]) -> Calendar:
     from voe_outage_calendar.ical import disconnections_to_ical
 
     return disconnections_to_ical(outages)
-
-
-def main():
-    parser = ArgumentParser("voe-crawler", description="Export Vinnytsia Oblenergo outages to Google Calendar")
-    parser.add_argument("-c", "--city", help="City (Vinnytska oblast only)", required=True)
-    parser.add_argument("-s", "--street", help="Street", required=True)
-    parser.add_argument("-b", "--building", help="Building number", required=True)
-    args = parser.parse_args()
-
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(logging.Formatter("{asctime} {levelname:5} {name}: {message}", style="{"))
-    logging.getLogger().addHandler(handler)
-    logging.getLogger("ical_to_gcal_sync").setLevel(logging.DEBUG)
-    logging.getLogger("voe_outage_calendar").setLevel(logging.DEBUG)
-
-    django.setup()  # otherwise django translations don't work
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(voe_sync_outages(args.city, args.street, args.building))
-    loop.close()
