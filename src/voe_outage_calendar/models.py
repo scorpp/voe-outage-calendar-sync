@@ -23,6 +23,13 @@ class Building(IdName):
     pass
 
 
+@dataclass
+class Address:
+    city: City
+    street: Street
+    building: Building
+
+
 class OutageType(StrEnum):
     CONFIRMED = "confirmed", _("Confirmed")
     UNCONFIRMED = "unconfirmed", _("Unconfirmed")
